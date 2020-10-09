@@ -1,0 +1,83 @@
+header h1 {
+    text-align: center;
+}
+
+#search {
+    background: cornflowerblue;
+    margin: 1rem 0;
+    padding: 1rem;
+}
+
+form {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    margin: 0 auto 1rem;
+    text-align: center;
+    width: 65%;
+}
+
+form h3 {
+    text-align: left;
+    width: 100%;
+}
+
+form input {
+    height: 2.3rem;
+    width: 70%;
+}
+
+form button {
+    width: 20%;
+    min-width: 5rem;
+    text-align: center;
+}
+
+img {
+    margin: 0 auto;
+    width: 100%;
+}
+
+ul {
+    display: flex;
+    flex-flow: row wrap;
+    list-style: none;
+}
+
+li {
+    margin: 0 1rem;
+    cursor: pointer;
+}
+
+
+
+
+#current .card {
+    align-items: center;
+    background: lightblue;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    padding: 1rem;
+    padding-bottom: 2rem;
+    width: 100%;
+}
+
+.card-title {
+    text-align: center;
+    width: 100%;
+}
+
+.card figure {
+    background: #fff;
+    margin: 0 auto;
+    width: 20%;
+}
+
+.card aside {
+    display: flex;
+    flex-flow: column wrap;
+    margin: 0 auto;
+    justify-content: center;
+    width: 30%;
+}
