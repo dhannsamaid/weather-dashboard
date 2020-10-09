@@ -11,7 +11,7 @@ $(document).ready(function() {
         recentSearches = JSON.parse(localStorage.getItem('recentSearches'));
         displayRecents();
     }
-    
+
     // add event listener to submit city search button
     $("#submit").on("click", function(event) {
         event.preventDefault();
@@ -26,7 +26,23 @@ $(document).ready(function() {
     })
 
     function currentWeatherCall(city) {
-        cityToSearch = city;
+
+        // add default USA if no country
+        cityToSearch = city.toLowerCase();
+        let splitCity = [];
+        if (cityToSearch.includes(",")) {
+            splitCity = cityToSearch.split(",");
+            splitCity = splitCity.map(word => word.trim());
+            let lastWord = splitCity[splitCity.length - 1];
+            if (!lastWord.includes('us')) {
+                console.log('does not include us');
+                splitCity.push('usa');
+            }
+            cityToSearch = splitCity.join(", ");
+        }
+        console.log(">>>>>" + cityToSearch);
+
+
         let url = `${currentEndpoint}${cityToSearch}&appid=${apikey}`
 
         $.ajax({
@@ -61,15 +77,15 @@ $(document).ready(function() {
 
     function displayCurrent(data) {
         let humidity = data.main.humidity;
-        let temp = data.main.temp;
-        let tempMax = data.main.temp_max;
-        let tempMin = data.main.temp_min;
+        let temp = data.main.temp - 273.15;
+        let tempMax = data.main.temp_max - 273.15;
+        let tempMin = data.main.temp_min - 273.15;
         let iconCode = data.weather[0].icon;
         let iconUrl = getIconUrl(iconCode);
 
-        $("#current .tempSpan").text(temp);
-        $("#minSpan").text(tempMin);
-        $("#maxSpan").text(tempMax);
+        $("#current .tempSpan").html(temp.toFixed(2) + ' &deg;C');
+        $("#minSpan").html(tempMin.toFixed(2) + ' &deg;C');
+        $("#maxSpan").html(tempMax.toFixed(2) + ' &deg;C');
         $("#current img").attr("src", iconUrl);
         $("#current .humidSpan").text(humidity + "%");
     }
