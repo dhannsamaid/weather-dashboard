@@ -4,7 +4,7 @@ $(document).ready(function() {
 
     let apikey = "a8399274d821a66647513527414df9b0";
     let currentEndpoint = "https://api.openweathermap.org/data/2.5/weather?q=";
-
+    let fiveDayEndpoint = "https://api.openweathermap.org/data/2.5/onecall?";
     let recentSearches = [];
 
     // check if there are recent searches in local storage and display them
@@ -41,6 +41,12 @@ $(document).ready(function() {
 
             // display recents
             displayRecents();
+
+            // make 5 day call with lat, lon
+            let lat = response.coord.lat;
+            let lon = response.coord.lon;
+            fiveDayWeatherCall(lat, lon);
+
         })
     }
 
@@ -91,10 +97,39 @@ $(document).ready(function() {
         })
     }
 
-    function fiveDayWeatherCall(city) {
-        let cityToSearch = city.toLowerCase();
-        let url = 
+    function fiveDayWeatherCall(lat, lon) {
+        console.log('five day called');
+        let url = `${fiveDayEndpoint}lat=${lat}&lon=${lon}&exclude=current,minutely,hourly&appid=${apikey}`;
+        $.get(url, (response) => {
+            console.log(response);
+            displayFiveDay(response);
 
+            // add UV to current weather data because it comes from the fiveDay response
+            let uvIndex = response.daily[0].uvi;
+            $("#current .uvSpan").text(uvIndex);
+        })
+    }
+
+    function displayFiveDay(data) {
+        $("#5day").empty();
+        for (let i = 0; i < 5; i++) {
+            let day = data.daily[i];
+            let dateCode = day.dt;
+            let humidity = day.humidity;
+            let temp = day.temp.day;
+            let temp_max = day.temp.max;
+            let temp_min = day.temp.min;
+            let weather = day.weather[0].main;
+            let iconUrl = getIconUrl(day.weather[0].icon);
+
+            let dayCard = $("<div>").addClass("card");
+            dayCard.append( $("<figure>").addClass("daily-icon").append( $("<img>").attr("src", iconUrl) ) );
+            dayCard.append( $("<p>").addClass("card-text").text("weather: " + weather) );
+            dayCard.append( $("<p>").addClass("card-text").text("min: " + temp_min) );
+            dayCard.append( $("<p>").addClass("card-text").text("max: " + temp_max) );
+
+            $("#5day").append(dayCard);
+        }
     }
 //     function displayFiveDay(data) {
 //         let date = data.dt_txt;
