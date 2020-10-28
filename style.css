@@ -82,6 +82,10 @@ li {
     width: 20%;
 }
 
+#weather-figure {
+    display: none;
+}
+
 .card aside {
     display: flex;
     flex-flow: column wrap;

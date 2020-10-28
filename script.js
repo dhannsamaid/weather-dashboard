@@ -62,7 +62,6 @@ $(document).ready(function() {
         return iconUrl;
     }
 
-
     function displayCurrent(data) {
         let humidity = data.main.humidity;
         let temp = data.main.temp - 273.15;
@@ -75,10 +74,9 @@ $(document).ready(function() {
         $("#minSpan").html(tempMin.toFixed(2) + ' &deg;C');
         $("#maxSpan").html(tempMax.toFixed(2) + ' &deg;C');
         $("#current img").attr("src", iconUrl);
+        $("#weather-figure").show();
         $("#current .humidSpan").text(humidity + "%");
     }
-
-
 
     function saveToRecent(city) {
         recentSearches.push(city);
@@ -87,7 +85,6 @@ $(document).ready(function() {
         }
         let recentSearchesString = JSON.stringify(recentSearches)
         localStorage.setItem('recentSearches', recentSearchesString);
-
     }
 
     function displayRecents() {
@@ -100,6 +97,7 @@ $(document).ready(function() {
         })
     }
 
+    
 
 //     function displayFiveDay(data) {
 //         let date = data.dt_txt;
