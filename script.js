@@ -6,6 +6,8 @@ $(document).ready(function() {
     let currentEndpoint = "https://api.openweathermap.org/data/2.5/weather?q=";
 
     let recentSearches = [];
+
+    // check if there are recent searches in local storage and display them
     if (localStorage.getItem('recentSearches')) {
         console.log('found stored searches');
         recentSearches = JSON.parse(localStorage.getItem('recentSearches'));
@@ -15,33 +17,19 @@ $(document).ready(function() {
     // add event listener to submit city search button
     $("#submit").on("click", function(event) {
         event.preventDefault();
-        currentWeatherCall($("#city-search-field").val());
+        currentWeatherCall($("#city-search-field").val() + ', ' + $("#country").val());
     });
 
     // add event listener to recents
     $("#recent-searches").on('click', function(event) {
+        event.stopPropagation();
         let city = $(event.target).text();
-        console.log(city);
         currentWeatherCall(city);
     })
 
     function currentWeatherCall(city) {
 
-        // add default USA if no country
         cityToSearch = city.toLowerCase();
-        let splitCity = [];
-        if (cityToSearch.includes(",")) {
-            splitCity = cityToSearch.split(",");
-            splitCity = splitCity.map(word => word.trim());
-            let lastWord = splitCity[splitCity.length - 1];
-            if (!lastWord.includes('us')) {
-                console.log('does not include us');
-                splitCity.push('usa');
-            }
-            cityToSearch = splitCity.join(", ");
-        }
-        console.log(">>>>>" + cityToSearch);
-
 
         let url = `${currentEndpoint}${cityToSearch}&appid=${apikey}`
 
@@ -53,7 +41,7 @@ $(document).ready(function() {
             displayCurrent(response);
 
             // save to recent
-            saveToRecent(cityToSearch);
+            saveToRecent(city);
 
             // display recents
             displayRecents();
@@ -93,7 +81,7 @@ $(document).ready(function() {
 
 
     function saveToRecent(city) {
-        recentSearches.push(cityToSearch);
+        recentSearches.push(city);
         if (recentSearches.length > 5) {
             recentSearches.shift();
         }
