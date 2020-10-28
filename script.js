@@ -22,17 +22,13 @@ $(document).ready(function() {
 
     // add event listener to recents
     $("#recent-searches").on('click', function(event) {
-        event.stopPropagation();
         let city = $(event.target).text();
         currentWeatherCall(city);
     })
 
     function currentWeatherCall(city) {
-
         cityToSearch = city.toLowerCase();
-
         let url = `${currentEndpoint}${cityToSearch}&appid=${apikey}`
-
         $.ajax({
             method : 'GET',
             url : url,
@@ -65,14 +61,12 @@ $(document).ready(function() {
     function displayCurrent(data) {
         let humidity = data.main.humidity;
         let temp = data.main.temp - 273.15;
-        let tempMax = data.main.temp_max - 273.15;
-        let tempMin = data.main.temp_min - 273.15;
         let iconCode = data.weather[0].icon;
         let iconUrl = getIconUrl(iconCode);
 
         $("#current .tempSpan").html(temp.toFixed(2) + ' &deg;C');
-        $("#minSpan").html(tempMin.toFixed(2) + ' &deg;C');
-        $("#maxSpan").html(tempMax.toFixed(2) + ' &deg;C');
+        /* $("#minSpan").html(tempMin.toFixed(2) + ' &deg;C');
+        $("#maxSpan").html(tempMax.toFixed(2) + ' &deg;C'); */
         $("#current img").attr("src", iconUrl);
         $("#weather-figure").show();
         $("#current .humidSpan").text(humidity + "%");
@@ -97,8 +91,11 @@ $(document).ready(function() {
         })
     }
 
-    
+    function fiveDayWeatherCall(city) {
+        let cityToSearch = city.toLowerCase();
+        let url = 
 
+    }
 //     function displayFiveDay(data) {
 //         let date = data.dt_txt;
 //         let temp = data.main.temp;
