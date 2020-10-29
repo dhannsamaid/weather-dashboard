@@ -12,6 +12,8 @@ $(document).ready(function() {
         console.log('found stored searches');
         recentSearches = JSON.parse(localStorage.getItem('recentSearches'));
         displayRecents();
+        // get weather for last called city
+        currentWeatherCall($("#recent-searches li").last().text())
     }
 
     // add event listener to submit city search button
@@ -50,13 +52,22 @@ $(document).ready(function() {
         })
     }
 
-    function formatDate(date) {
-        let ymd = date.split(" ")[0];
-        let ymdSplit = ymd.split("-");
-        let month = ymdSplit[1];
-        let day = ymdSplit[2];
-        let formattedDate = `${month}/${day}`;
-        return formattedDate;
+    function formatDate(dateCode) {
+        dateString = "";
+        dateObj = new Date(dateCode * 1000);
+        let month = (dateObj.getMonth() + 1).toString();
+        let date = dateObj.getDate().toString();
+
+        if (month.length == 1) {
+            month = '0' + month;
+        }
+        if (date.length == 1) {
+            date = '0' + date;
+        }
+
+        dateString += `${month} / ${date}`;
+
+        return dateString;
     }
 
     function getIconUrl(iconCode) {
@@ -69,7 +80,10 @@ $(document).ready(function() {
         let temp = data.main.temp - 273.15;
         let iconCode = data.weather[0].icon;
         let iconUrl = getIconUrl(iconCode);
+        let cityName = data.name;
 
+
+        $("#current .name").text(' in ' + cityName + ': ');
         $("#current .tempSpan").html(temp.toFixed(2) + ' &deg;C');
         /* $("#minSpan").html(tempMin.toFixed(2) + ' &deg;C');
         $("#maxSpan").html(tempMax.toFixed(2) + ' &deg;C'); */
@@ -101,7 +115,6 @@ $(document).ready(function() {
         console.log('five day called');
         let url = `${fiveDayEndpoint}lat=${lat}&lon=${lon}&exclude=current,minutely,hourly&appid=${apikey}`;
         $.get(url, (response) => {
-            console.log(response);
             displayFiveDay(response);
 
             // add UV to current weather data because it comes from the fiveDay response
@@ -111,7 +124,7 @@ $(document).ready(function() {
     }
 
     function displayFiveDay(data) {
-        $("#5day").empty();
+        $("#fiveday").empty();
         for (let i = 0; i < 5; i++) {
             let day = data.daily[i];
             let dateCode = day.dt;
@@ -122,32 +135,21 @@ $(document).ready(function() {
             let weather = day.weather[0].main;
             let iconUrl = getIconUrl(day.weather[0].icon);
 
-            let dayCard = $("<div>").addClass("card");
+            let dayCard = $("<div>").addClass("card day-card");
+            dayCard.append( $("<h2>").addClass("date").text(formatDate(dateCode)) );
             dayCard.append( $("<figure>").addClass("daily-icon").append( $("<img>").attr("src", iconUrl) ) );
-            dayCard.append( $("<p>").addClass("card-text").text("weather: " + weather) );
-            dayCard.append( $("<p>").addClass("card-text").text("min: " + temp_min) );
-            dayCard.append( $("<p>").addClass("card-text").text("max: " + temp_max) );
+            let dayInfo = $("<div>").addClass("day-info");
+            dayInfo.append( $("<p>").addClass("card-text").text("weather: " + weather) );
+            dayInfo.append( $("<p>").addClass("card-text").text("min: " + temp_min) );
+            dayInfo.append( $("<p>").addClass("card-text").text("max: " + temp_max) );
+            dayCard.append(dayInfo);
 
-            $("#5day").append(dayCard);
+            $("#fiveday").append(dayCard);
         }
     }
-//     function displayFiveDay(data) {
-//         let date = data.dt_txt;
-//         let temp = data.main.temp;
-//         let humidity = data.main.humidity;
-//         let icon = data.weather[0].icon;
-//         let iconUrl = getIconUrl(icon);
-//         date = formatDate(date);
 
-//         let dayCast = $("<div>");
-//         dayCast.addClass("card");
-//         dayCast.append( $("<h4>").text(date) );
-//         dayCast.append( $("<img>").attr("src", iconUrl) );
-//         dayCast.append( $("<p>").text("Temp: " + temp) );
-//         dayCast.append( $("<p>").text("Humidity: " + humidity + "%") );
-        
+    function convertTemp(temp) {
 
-//         $("#5day").append(dayCast);
-//     }
+    }
 
 });
