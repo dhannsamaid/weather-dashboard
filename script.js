@@ -77,14 +77,15 @@ $(document).ready(function() {
 
     function displayCurrent(data) {
         let humidity = data.main.humidity;
-        let temp = data.main.temp - 273.15;
+        let temp = convertTemp(data.main.temp);
         let iconCode = data.weather[0].icon;
         let iconUrl = getIconUrl(iconCode);
         let cityName = data.name;
 
 
         $("#current .name").text(' in ' + cityName + ': ');
-        $("#current .tempSpan").html(temp.toFixed(2) + ' &deg;C');
+        //$("#current .tempSpan").html(temp.toFixed(2) + ' &deg;C');
+        $("#current .tempSpan").html(temp);
         /* $("#minSpan").html(tempMin.toFixed(2) + ' &deg;C');
         $("#maxSpan").html(tempMax.toFixed(2) + ' &deg;C'); */
         $("#current img").attr("src", iconUrl);
@@ -130,8 +131,8 @@ $(document).ready(function() {
             let dateCode = day.dt;
             let humidity = day.humidity;
             let temp = day.temp.day;
-            let temp_max = day.temp.max;
-            let temp_min = day.temp.min;
+            let temp_max = convertTemp(day.temp.max);
+            let temp_min = convertTemp(day.temp.min);
             let weather = day.weather[0].main;
             let iconUrl = getIconUrl(day.weather[0].icon);
 
@@ -149,7 +150,9 @@ $(document).ready(function() {
     }
 
     function convertTemp(temp) {
-
+        temp = (temp - 273.15).toFixed(2);
+        temp += ' °C'
+        return temp;
     }
 
 });
