@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    let cityToSearch = ""
+    let cityToSearch = "";
 
     let apikey = "a8399274d821a66647513527414df9b0";
     let currentEndpoint = "https://api.openweathermap.org/data/2.5/weather?q=";

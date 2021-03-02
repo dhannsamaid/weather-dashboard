@@ -1,9 +1,15 @@
+body {
+  background-color: #fff;
+}
+
 header h1 {
+  margin: 1em auto;
+    color: #0f110c;
     text-align: center;
 }
 
 #search {
-    background: azure;
+    background: #f0ffff;
     border: 1px solid rgba(0, 0, 0, .125);
     border-radius: .25rem;
     margin: 1rem 0;
@@ -43,6 +49,10 @@ form button {
     text-align: center;
 }
 
+.btn-primary {
+  background-color: #0f110c;
+}
+
 img {
     margin: 0 auto;
     width: 100%;
@@ -64,7 +74,7 @@ li {
 
 #current .card {
     align-items: center;
-    background: lightblue;
+    background: #FBFFE3;
     display: flex;
     flex-flow: row wrap;
     justify-content: space-evenly;
