@@ -94,6 +94,10 @@ $(document).ready(function() {
     }
 
     function saveToRecent(city) {
+        if (recentSearches.indexOf(city) != -1) {
+          console.log('same as last one');
+          return;
+        }
         recentSearches.push(city);
         if (recentSearches.length > 5) {
             recentSearches.shift();
