@@ -115,12 +115,23 @@ $(document).ready(function() {
     function fiveDayWeatherCall(lat, lon) {
         console.log('five day called');
         let url = `${fiveDayEndpoint}lat=${lat}&lon=${lon}&exclude=current,minutely,hourly&appid=${apikey}`;
-        $.get(url, (response) => {
-            displayFiveDay(response);
 
-            // add UV to current weather data because it comes from the fiveDay response
-            let uvIndex = response.daily[0].uvi;
-            $("#current .uvSpan").text(uvIndex);
+        // $.get(url, (response) => {
+        //     displayFiveDay(response);
+
+        //     // add UV to current weather data because it comes from the fiveDay response
+        //     let uvIndex = response.daily[0].uvi;
+        //     $("#current .uvSpan").text(uvIndex);
+        // })
+
+        fetch(url)
+        .then((res) => {
+          return res.json();
+        })
+        .then((jsonRes) => {
+          displayFiveDay(jsonRes);
+          const uvIndex = jsonRes.daily[0].uvi;
+          $("#current .uvSpan").text(uvIndex);
         })
     }
 
