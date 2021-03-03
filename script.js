@@ -139,7 +139,7 @@ $(document).ready(function() {
             let iconUrl = getIconUrl(day.weather[0].icon);
 
             let dayCard = $("<div>").addClass("card day-card");
-            dayCard.append( $("<h2>").addClass("date").text(formatDate(dateCode)) );
+            dayCard.append( $("<h4>").addClass("date").text(formatDate(dateCode)) );
             dayCard.append( $("<figure>").addClass("daily-icon").append( $("<img>").attr("src", iconUrl) ) );
             let dayInfo = $("<div>").addClass("day-info");
             dayInfo.append( $("<p>").addClass("card-text").text("weather: " + weather) );
