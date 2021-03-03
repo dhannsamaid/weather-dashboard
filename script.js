@@ -19,7 +19,7 @@ $(document).ready(function() {
     // add event listener to submit city search button
     $("#submit").on("click", function(event) {
         event.preventDefault();
-        currentWeatherCall($("#city-search-field").val() + ', ' + $("#country").val());
+        currentWeatherCall($("#city-search-field").val());
     });
 
     // add event listener to recents
@@ -30,25 +30,25 @@ $(document).ready(function() {
 
     function currentWeatherCall(city) {
         cityToSearch = city.toLowerCase();
-        let url = `${currentEndpoint}${cityToSearch}&appid=${apikey}`
-        $.ajax({
-            method : 'GET',
-            url : url,
-        }).then(function(response) {
-            console.log(response);
-            displayCurrent(response);
+        let url = `${currentEndpoint}${cityToSearch}&appid=${apikey}`;
 
-            // save to recent
-            saveToRecent(city);
+        fetch(url)
+        .then((res) => {
+          console.log(res);
+          if (res.status == 404) {
+            console.log('NOPE');
+          }
+          jsonRes = res.json();
+          return jsonRes;
+        })
+        .then((jsonRes) => {
+          displayCurrent(jsonRes);
+          saveToRecent(city);
+          displayRecents();
 
-            // display recents
-            displayRecents();
-
-            // make 5 day call with lat, lon
-            let lat = response.coord.lat;
-            let lon = response.coord.lon;
-            fiveDayWeatherCall(lat, lon);
-
+          const lat = jsonRes.coord.lat;
+          const lon = jsonRes.coord.lon;
+          fiveDayWeatherCall(lat, lon);
         })
     }
 
