@@ -8,7 +8,7 @@ A basic weather dashboard that queries the [OpenWeather](https://openweathermap.
 
 ## Usage
 
-Use the dashboard [here](https://mtorcellini.github.io/weather-app/).
+Use the dashboard [here](https://mtorcellini.github.io/weather-dashboard/).
 
 ![Screenshot of Weather Dashboard in Use](./screenshot.png)
 
