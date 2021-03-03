@@ -8,7 +8,7 @@ A basic weather dashboard that queries the [OpenWeather](https://openweathermap.
 
 ## Usage
 
-Use the app [here](https://mtorcellini.github.io/weather-app/). Type a city and state (e.g., `Ashton, ID`) into the search field and press enter or click the submit button.
+Use the app [here](https://mtorcellini.github.io/weather-app/).
 
 ![Screenshot of Weather Dashboard in Use](./screenshot.png)
 
