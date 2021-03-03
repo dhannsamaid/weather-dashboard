@@ -55,8 +55,13 @@ form button {
 }
 
 img {
-    margin: 0 auto;
+    margin: 10px auto;
     width: 100%;
+}
+
+#weather-figure img, .daily-icon img {
+  background-color: skyblue;
+  border-radius: 20px;
 }
 
 #recent p {
