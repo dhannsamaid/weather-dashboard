@@ -39,6 +39,11 @@ form input {
     width: 15em;
 }
 
+form #err {
+  display: none;
+  color: red;
+}
+
 form button {
     width: 20%;
     min-width: 5rem;

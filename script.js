@@ -37,7 +37,10 @@ $(document).ready(function() {
           console.log(res);
           if (res.status == 404) {
             console.log('NOPE');
+            $("#err").show();
+            return;
           }
+          $("#err").hide();
           jsonRes = res.json();
           return jsonRes;
         })
