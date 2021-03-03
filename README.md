@@ -1,6 +1,6 @@
 # Weather Dashboard
 
-[Deployed Application](https://mtorcellini.github.io/weather-app/)
+[Deployed Application](https://mtorcellini.github.io/weather-dashboard/)
 
 ## Description
 
@@ -8,7 +8,7 @@ A basic weather dashboard that queries the [OpenWeather](https://openweathermap.
 
 ## Usage
 
-Use the app [here](https://mtorcellini.github.io/weather-app/).
+Use the dashboard [here](https://mtorcellini.github.io/weather-app/).
 
 ![Screenshot of Weather Dashboard in Use](./screenshot.png)
 
