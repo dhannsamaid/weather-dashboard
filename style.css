@@ -52,6 +52,7 @@ form button {
 
 .btn-primary {
   background-color: #0f110c;
+  border: none;
 }
 
 img {
@@ -63,6 +64,7 @@ img {
   background-color: skyblue;
   border-radius: 20px;
 }
+
 
 #recent p {
   font-size: 1.5rem;
@@ -89,6 +91,12 @@ img {
   line-height: 1.5em;
   text-align: center;
   width: 45%;
+  transition: 250ms;
+}
+
+.recent-search:hover {
+  background-color: #0069d9;
+  color: #fff;
 }
 
 #current .card {
