@@ -3,7 +3,7 @@ $(document).ready(function() {
     let cityToSearch = "";
 
     let apikey = "a8399274d821a66647513527414df9b0";
-    let currentEndpoint = "https://api.openweathermap.org/data/2.5/weather?q=";
+    let currentEndpoint = "https://api.openweathermap.org/data/2.5/weather?";
     let fiveDayEndpoint = "https://api.openweathermap.org/data/2.5/onecall?";
     let recentSearches = [];
 
@@ -14,6 +14,13 @@ $(document).ready(function() {
         displayRecents();
         // get weather for last called city
         currentWeatherCall($("#recent-searches li").last().text())
+    }
+
+    if ('geolocation' in navigator) {
+      console.log('geo in nav');
+      getLocal();
+    } else {
+      console.log('get NOT in nav');
     }
 
     // add event listener to submit city search button
@@ -28,9 +35,14 @@ $(document).ready(function() {
         currentWeatherCall(city);
     })
 
-    function currentWeatherCall(city) {
+    function currentWeatherCall(city, coords) {
+      if (city) {
         cityToSearch = city.toLowerCase();
-        let url = `${currentEndpoint}${cityToSearch}&appid=${apikey}`;
+      }
+        let url = `${currentEndpoint}q=${cityToSearch}&appid=${apikey}`;
+        if (coords) {
+          url = `${currentEndpoint}lat=${coords[0]}&lon=${coords[1]}&appid=${apikey}`;
+        }
 
         fetch(url)
         .then((res) => {
@@ -46,7 +58,9 @@ $(document).ready(function() {
         })
         .then((jsonRes) => {
           displayCurrent(jsonRes);
-          saveToRecent(city);
+          if (city) {
+            saveToRecent(city);
+          }
           displayRecents();
 
           const lat = jsonRes.coord.lat;
@@ -162,6 +176,13 @@ $(document).ready(function() {
         temp = (temp - 273.15).toFixed(2);
         temp += ' °C'
         return temp;
+    }
+
+    function getLocal() {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        console.log(position);
+        currentWeatherCall(false, [position.coords.latitude, position.coords.longitude]);
+      })
     }
 
 });
